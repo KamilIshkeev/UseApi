@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 using UserApi.DataBaseContext;
 using UserApi.Interfaces;
 using UserApi.Model;
@@ -27,9 +28,10 @@ namespace UserApi.Service
                     (user, email) => new
                     {
                         id_User = user.id_User,
+                        Email = email.Email,
                         Name = user.Name,
-                        Description = user.Descrioption,
-                        Email = email.Email
+                        Descrioption = user.Descrioption,
+                        Role = email.Role
                     }
                 )
                 .ToListAsync();
@@ -48,7 +50,7 @@ namespace UserApi.Service
             var user = new Users()
             {
                 Name = newUser.Name,
-                Descrioption = newUser.Description,
+                Descrioption = newUser.Descrioption,
             };
 
             await _context.Users.AddAsync(user);
@@ -59,6 +61,7 @@ namespace UserApi.Service
                 User_id = user.id_User,
                 Email = newUser.Email,
                 Password = newUser.Password,
+                Role = "user"
             };
 
             await _context.Emails.AddAsync(login);
