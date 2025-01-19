@@ -8,5 +8,6 @@ namespace UserApi.Interfaces
         
         Task<IActionResult> GetAllUsersAsync();
         Task<IActionResult> CreateNewUserAndLoginAsync(CreateNewUserAndLogin newUser);
+        Task<IActionResult> DeleteUserAsync(int id);
     }
 }

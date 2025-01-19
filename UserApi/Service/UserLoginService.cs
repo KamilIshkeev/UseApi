@@ -27,6 +27,7 @@ namespace UserApi.Service
                     email => email.User_id,
                     (user, email) => new
                     {
+                        id_Email = email.id_Email,
                         id_User = user.id_User,
                         Email = email.Email,
                         Name = user.Name,
@@ -71,6 +72,21 @@ namespace UserApi.Service
             {
                 status = true
             });
+        }
+
+        public async Task<IActionResult> DeleteUserAsync(int id)
+        {
+            var email = await _context.Emails.FindAsync(id);
+            var user = await _context.Users.FindAsync(email.User_id);
+
+            if (email == null)
+            {
+                return new NotFoundObjectResult(new { Message = "Такого пользователь нет!" });
+            }
+            _context.Users.Remove(user);
+            _context.Emails.Remove(email);
+            await _context.SaveChangesAsync();
+            return new NoContentResult();
         }
     }
 }

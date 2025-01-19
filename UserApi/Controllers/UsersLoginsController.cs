@@ -1,6 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using UserApi.Interfaces;
+using UserApi.Model;
 using UserApi.Requests;
+using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Http.HttpResults;
+
 
 namespace UserApi.Controllers
 {
@@ -30,5 +34,13 @@ namespace UserApi.Controllers
         {
             return await _userLoginService.CreateNewUserAndLoginAsync(newUser);
         }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteUser(int id)
+        {
+            return await _userLoginService.DeleteUserAsync(id);
+        }
+
+
     }
 }
